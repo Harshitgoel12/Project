@@ -17,8 +17,10 @@ const register = async (req, res) => {
         const result=await cloudinary.uploader.upload(file.path);
         const user = await model.findOne({ email });
         if (user) {
+            console.log("user already exists")
             return res.status(401).json({ message: "User already exists", success: false });
         }
+        console.log("no user exists")
         const Password =await bcrypt.hash(password,10);
 
   await model.create({

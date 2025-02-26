@@ -1,12 +1,12 @@
 import React,{useContext, useEffect, useRef, useState} from 'react'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from 'react-router-dom';
-import ShowManu from './showManu';
-import context from './createcontext';
-import RecruiterPage from './RecruiterPage';
-import NormalHeader from './NormalHeader';
-import Profile from './Profile';
-import ShowProfile from './ShowProfile';
+import ShowManu from './ShowManu';
+import context from '../createcontext';
+import RecruiterPage from '../RecruiterComponent/RecruiterPage';
+import NormalHeader from '../UserComponent/NormalHeader';
+import Profile from '../Profile';
+import ShowProfile from '../ShowProfile';
 
 function Header() {
   const [user, setUser] = useState(null);

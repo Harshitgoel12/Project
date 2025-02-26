@@ -6,7 +6,7 @@ import { useContext, useState } from "react"
 import React from 'react'
 import axios from "axios"
 import { useNavigate, useNavigation } from "react-router-dom"
-import context from "./createcontext"
+import context from "../createcontext.js"
 
 function Login() {
   const {islogin,setIslogin}=useContext(context);

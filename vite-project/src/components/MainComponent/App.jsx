@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 import './App.css'
 import Footer from './Footer'
 import Header from './Header'
-import context from './createcontext'
+import context from '../createcontext'
 import { useEffect, useState } from 'react'
 function App() {
   const [islogin,setIslogin]=useState(false);
