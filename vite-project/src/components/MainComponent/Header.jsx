@@ -76,7 +76,7 @@ setImage(!image);
   
      </div>
 
-    {user?.role=="recruiter"&&handleprofile&&<ShowProfile user={user} data={["Post Job","Applied student","Shortlisted Student"]}
+    {user?.role=="recruiter"&&handleprofile&&<ShowProfile user={user} data={["my Job","Add Job", "Applied Student"]}
     setHandleProfile={setHandleProfile}/>}
     {user?.role=="student"&&handleprofile&&<ShowProfile user={user} data={["Applied Job","Job","Status"]} setHandleProfile=
     {setHandleProfile}/>}

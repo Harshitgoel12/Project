@@ -1,5 +1,6 @@
 const DB_Connect=require("./DB_Connection")
 const express = require("express");
+const recruiterRouter=require("./Router/recruterTask")
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
@@ -24,4 +25,5 @@ app.listen(3000,()=>{
 
 
 app.use("/api",router);
+app.use("/api",recruiterRouter);
 

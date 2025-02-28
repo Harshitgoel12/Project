@@ -3,7 +3,7 @@ import { IoLogoInstagram } from "react-icons/io";
 
 function Footer() {
   return (
-    <div className="mt-7 w-full mb-4">
+    <div className="mt-2 w-full mb-4">
       <hr className="mb-4 border-gray-300" />
       <div className="sm:flex sm:justify-between items-center w-full ms-8">
         <div>
