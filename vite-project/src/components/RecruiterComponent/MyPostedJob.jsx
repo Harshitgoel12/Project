@@ -6,8 +6,10 @@ function MyPostedJob() {
     const [data,setData]=useState([])
     async function fun(){
       const result= await axios.get("http://localhost:3000/api/myjobs", {withCredentials: true});
+      console.log(result);
       setData(result.data);
     }
+    
     useEffect(()=>{
       fun();
     },[])

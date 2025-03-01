@@ -13,6 +13,7 @@ import PostJob  from "./components/RecruiterComponent/PostJob.jsx"
 import { Provider } from "./components/ui/provider";
 import MyPostedJob from './components/RecruiterComponent/MyPostedJob'
 import DetailsofJob from './components/RecruiterComponent/DetailsofJob'
+import ViewProfile from './components/UserComponent/ViewProfile'
 
 
 
@@ -52,6 +53,10 @@ const AppRouter= createBrowserRouter([
       {
         path:"details/:id",
         element:<DetailsofJob/>
+      },
+      {
+        path:"profile",
+        element:<ViewProfile/>
       }
      ]
   }

@@ -33,6 +33,7 @@ const Myjobcontrolelr=async(req,res)=>{
         if(!req.user){
        return res.status(401).json({message:"user is not login",success:false});
         }
+        
         const data=await model.find({PostedBy:req.user._id});
         return res.status(200).send({message:"we send all the data",success:true,data});
     } catch (error) {
