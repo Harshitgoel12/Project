@@ -14,6 +14,7 @@ import { Provider } from "./components/ui/provider";
 import MyPostedJob from './components/RecruiterComponent/MyPostedJob'
 import DetailsofJob from './components/RecruiterComponent/DetailsofJob'
 import ViewProfile from './components/UserComponent/ViewProfile'
+import UpdateProfile from './components/UserComponent/UpdateProfile'
 
 
 
@@ -57,6 +58,9 @@ const AppRouter= createBrowserRouter([
       {
         path:"profile",
         element:<ViewProfile/>
+      },{
+        path:"updateProfile",
+        element:<UpdateProfile/>
       }
      ]
   }

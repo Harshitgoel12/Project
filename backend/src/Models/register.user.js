@@ -23,7 +23,14 @@ const Schema= new mongoose.Schema({
     },
     file:{
         type:String,
-    }
+    },
+
+        Industary:{type:String,default:"NA"},
+        Experience:{type:String,default:"NA"},
+        About:{type:String,default:"NA"},
+        skills:{type:[String],default :["NA"]},
+        LinkedIn :{type:String,default:"NA"},
+        Github : {type:String,default:"NA"},
 })
 
 module.exports = mongoose.model("registeruser",Schema);

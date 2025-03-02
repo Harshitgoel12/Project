@@ -10,5 +10,6 @@ router.use(express.urlencoded({ extended: true }));
 console.log(controllers.register)
 router.route("/register").post(upload.single("file"),controllers.register);
 router.route("/login").post(controllers.login);
+router.route("/updateProfile").put(isAuthenticated,upload.single("file"),controllers.updateUserProfile);
 
 module.exports= router;

@@ -8,7 +8,7 @@ const router=require("./Router/user.Router")
 const cookieParser=require("cookie-parser")
 
 const corsOptions = {
-    origin:'http://localhost:5174',
+    origin:'http://localhost:5173',
     credentials:true
 }
 app.use(cookieParser());

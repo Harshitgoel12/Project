@@ -65,8 +65,45 @@ const login=async (req,res)=>{
    }
   
 }
+
+
+const updateUserProfile=async (req,res)=>{
+   
+    try {
+        if(!req.user){
+        return res.status(401).json({message:'user is not login',success:false});
+        }
+        const userId = req.user._id;
+        
+        const {username,Industary,Experience,About,skills,email,Number}=req.body;
+       
+        let result=null;
+         if(req.file){
+            result=await cloudinary.uploader.upload(req.file.path);
+         }
+         console.log(result);
+         
+        const updatedUser = await model.findByIdAndUpdate(userId, {username,Industary,Experience,About,
+            skills:skills.split(",")
+            ,email,Number,
+            file:result?result.secure_url:req.user.file
+
+        }, { new: true });
+    
+        if (!updatedUser) {
+            console.log("user not found")
+          return res.status(404).json({ message: "User not found" });
+        }
+    console.log(updatedUser)
+        res.status(200).json({ message: "Profile updated successfully", user: updatedUser ,success:true});
+      } catch (error) {
+        res.status(500).json({ message: "Error updating profile", error });
+      }
+}
+
 module.exports ={
     register,
-    login
+    login,
+    updateUserProfile
 }
 
