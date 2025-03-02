@@ -31,6 +31,12 @@ function UpdateProfile() {
     const data = localStorage.getItem("userdetail");
     if (data) {
       const result = JSON.parse(data);
+      if (typeof result.skills === "string") {
+        result.skills = result.skills.replaceAll(",", " ");
+      } else if (Array.isArray(result.skills)) {
+        result.skills = result.skills.join(" ");
+      }
+
       setUserData(result);
     }
   }, []);
@@ -52,7 +58,6 @@ const navigate=useNavigate();
   }, [userData]);
       async function handlesubmit(e){
         e.preventDefault();
-       
         const formData=new FormData();
         formData.append("username",userInput.username);
         formData.append("Industary",userInput.Industary);

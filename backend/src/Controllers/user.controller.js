@@ -74,17 +74,14 @@ const updateUserProfile=async (req,res)=>{
         return res.status(401).json({message:'user is not login',success:false});
         }
         const userId = req.user._id;
-        
         const {username,Industary,Experience,About,skills,email,Number}=req.body;
-       
         let result=null;
          if(req.file){
             result=await cloudinary.uploader.upload(req.file.path);
          }
-         console.log(result);
-         
+        
         const updatedUser = await model.findByIdAndUpdate(userId, {username,Industary,Experience,About,
-            skills:skills.split(",")
+            skills:skills.split(" ")
             ,email,Number,
             file:result?result.secure_url:req.user.file
 

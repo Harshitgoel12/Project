@@ -58,7 +58,7 @@ export default function ProfileHeader() {
             <div className='px-8 py-4'>
                 <h1 className='text-4xl font-semibold mb-4'>Skills</h1>
                 <div className='flex flex-wrap gap-4'>
-                    {['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS'].map((skill) => (
+                    {userData.skills?.map((skill) => (
                         <span key={skill} className='bg-blue-600 text-white font-semibold shadow-md shadow-blue-900 rounded-lg px-4 py-2'>
                             {skill}
                         </span>
