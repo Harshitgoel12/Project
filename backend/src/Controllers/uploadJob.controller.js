@@ -40,5 +40,14 @@ const Myjobcontrolelr=async(req,res)=>{
         console.log("something went wrong when we get data from myjob",error)
     }
 }
+const AllJobController=async(req,res)=>{
+    try {
+        console.log("lo ji yha tk to aa gye")
+        const data=await model.find({});
+        return res.status(200).send({message:"we send all the data",success:true,data});
+    } catch (error) {
+        console.log("something went wrong when we get data from myjob",error)
+    }
+}
 
-module.exports={jobUploadHandler,Myjobcontrolelr}
+module.exports={jobUploadHandler,Myjobcontrolelr,AllJobController}

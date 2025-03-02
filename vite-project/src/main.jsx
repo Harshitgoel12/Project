@@ -6,7 +6,7 @@ import App from './components/MainComponent/App.jsx'
 import HeroSection from './components/MainComponent/HeroSection.jsx'
 
 import Signup from './components/MainComponent/Signup.jsx'
-import Jobs from './components/MainComponent/Jobs.jsx'
+import Jobs from './components/UserComponent/Jobs.jsx'
 import Login from './components/MainComponent/Login.jsx'
 import Browser from './components/MainComponent/Browser.jsx'
 import PostJob  from "./components/RecruiterComponent/PostJob.jsx"
