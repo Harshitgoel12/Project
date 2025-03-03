@@ -24,7 +24,14 @@ const Schema= new mongoose.Schema({
     file:{
         type:String,
     },
+    Apply:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:"PostJob"
+    },
 
+    Resume:{
+        type:String
+    },
         Industary:{type:String,default:"NA"},
         Experience:{type:String,default:"NA"},
         About:{type:String,default:"NA"},

@@ -7,23 +7,6 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 function UpdateProfile() {
-    // const [userData,setUserData]=useState({})
-    // useEffect(()=>{
-    //    const data= localStorage.getItem("userdetail");
-    //    const result=JSON.parse(data);
-    //    setUserData(result);
-    //    console.log(result);
-    // },[])
-    // const [userInput,setInput]=useState({
-    //    username:userData.username,
-    //    Indastary:userData.Indastary||"NA",
-    //    Experience:userData.Exerience||"NA",
-    //    About:userData.About||"NA",
-    //    skills:userData.skills||"NA",
-    //    email:userData.email||"NA",
-    //    Number:userData.Number||"NA",
-    //    file:userData.file||"NA",
-    //   })
 
     const [userData, setUserData] = useState({}); // Initialize with empty object
   

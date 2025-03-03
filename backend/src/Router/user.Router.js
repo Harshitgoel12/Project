@@ -11,5 +11,7 @@ console.log(controllers.register)
 router.route("/register").post(upload.single("file"),controllers.register);
 router.route("/login").post(controllers.login);
 router.route("/updateProfile").put(isAuthenticated,upload.single("file"),controllers.updateUserProfile);
+router.route("/uploadresume").post(isAuthenticated,upload.single("Resume"),controllers.uploadResume);
+router.route("/ApplyJob/:id").put(isAuthenticated,controllers.Applyjob);
 
 module.exports= router;

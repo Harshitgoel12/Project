@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ShowEditDilog from "./UpdateProfile";
 import { Link } from "react-router-dom";
+import axios from "axios";
 export default function ProfileHeader() {
   const [userData,setUserData]=useState([])
     useEffect(()=>{
@@ -8,6 +9,34 @@ export default function ProfileHeader() {
        const result=JSON.parse(data);
        setUserData(result);
     },[])
+    const [Resume,setResume]=useState();
+    const handleUpload = async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+      
+        const formData = new FormData();
+        formData.append("Resume", file);
+      
+        try {
+          const response = await axios.post(
+            "http://localhost:3000/api/uploadresume",
+            formData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+              withCredentials: true,
+            }
+          );
+      
+          console.log(response.data); 
+          if (response.data.success) { 
+            localStorage.setItem("resume",JSON.stringify(response.data.data));
+          } else {
+            console.error("Upload failed:", response.data.message);
+          }
+        } catch (error) {
+          console.error("Error uploading resume:", error);
+        }
+      };
     return (
         <div className='w-full relative bg-gray-100 min-h-screen mt-2'>
             {/* Cover Image */}
@@ -72,7 +101,7 @@ export default function ProfileHeader() {
 
                 <div className="flex flex-col sm:flex-row items-center gap-4">
                     <a
-                        href="/path-to-resume.pdf"
+                        href={JSON.parse(localStorage.getItem("resume"))}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
@@ -81,10 +110,11 @@ export default function ProfileHeader() {
                     </a>
 
                     {/* Upload Resume Button */}
-                    <label className="cursor-pointer bg-gray-200 text-gray-700 font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-gray-300 transition duration-300">
+                    {userData.role=="student"&&<label className="cursor-pointer bg-gray-200 text-gray-700 font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-gray-300 transition duration-300"
+                    onChange={handleUpload}>
                         Upload Resume
-                        <input type="file" className="hidden" />
-                    </label>
+                        <input type="file" accept=".pdf,.doc,.docx" className="hidden" />
+                    </label>}
                 </div>
             </div>
 

@@ -1,5 +1,6 @@
 
-const model=require("../Models/register.user")
+const model=require("../Models/register.user");
+const jobModel=require("../Models/JobUpload.js")
 const bcrypt = require('bcrypt');
 const jwt=require("jsonwebtoken");
 const cloudinary=require("../utils/cloudinary")
@@ -50,8 +51,6 @@ const login=async (req,res)=>{
          return res.status(401).json({message:"user is not registered",success:false});
       }
    
-      //generate access token
-    
       const token=await jwt.sign({_id:user._id},"fjalsdjflaksjgdkadfjgkhsdkjfhgkjdshfgkhdfjkhg",{
          expiresIn:"1d"
       });
@@ -84,7 +83,6 @@ const updateUserProfile=async (req,res)=>{
             skills:skills.split(" ")
             ,email,Number,
             file:result?result.secure_url:req.user.file
-
         }, { new: true });
     
         if (!updatedUser) {
@@ -98,9 +96,67 @@ const updateUserProfile=async (req,res)=>{
       }
 }
 
+const uploadResume=async(req,res)=>{
+    try {
+        if(!req.file){
+          return res.status(401).json({message:"please input the file",success:false});
+        }
+        const result = await cloudinary.uploader.upload(req.file.path, {  format: "pdf", });
+        const updatedUser = await model.findByIdAndUpdate(
+            req.user._id,
+            { Resume: result.secure_url },
+            { new: true }
+          );
+          return res.status(200).json({
+            message: "Resume uploaded successfully",
+            success: true,
+            data: result.secure_url,
+          })
+    } catch (error) {
+        console.log("something went wrong while uploading the resume",error);
+    }
+}
+
+
+const Applyjob =async (req,res)=>{
+ try {
+    const id=req.params.id;
+        if(!req.user){
+            return res.status(401).json({message:"you are not registered",success:false});
+        }
+            
+    const user = await model.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found", success: false });
+    }
+
+    const job = await jobModel.findById(id);
+    if (!job) {
+      return res.status(404).json({ message: "Job not found", success: false });
+    }
+
+    await model.updateOne(
+      { _id: req.user._id },
+      { $push: { Apply: id } } 
+    );
+
+    await jobModel.updateOne(
+      { _id: id },
+      { $push: { UserApplied: req.user._id } } 
+    );
+        return res.status(200).json({message:"job apply successfully",success:true,id:{id}});
+ } catch (error) {
+    console.log("something went wrong while applying to the job",error);
+ }
+}
+
+
+
 module.exports ={
     register,
     login,
-    updateUserProfile
+    updateUserProfile,
+    uploadResume,
+    Applyjob
 }
 
