@@ -14,7 +14,7 @@ function Header() {
   const [isOpen, setOpen] = useState(false);
   const [handleprofile,setHandleProfile]=useState(false);
   const {islogin,setIslogin}=useContext(context);
-     const ref=useRef();
+   
   useEffect(() => {
       const storedUser = localStorage.getItem("userdetail");
       if (islogin) {
@@ -61,25 +61,25 @@ setImage(!image);
           </div>
         ) : (
           <>
-          <div className=' gap-20 hidden md:flex'>
+          <div className=' gap-20 hidden lg:flex'>
          {user?.role=="recruiter"?<RecruiterPage/>:<NormalHeader/>}
          <div className="font-semibold mt-3  " onClick={handleImageClick}>
          <img src={user?.file||"https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"}  className='h-10 w-10 rounded-2xl me-10'/>
        </div>
        </div>
-        <GiHamburgerMenu className='mt-5 text-2xl block md:hidden me-12'  onClick={handleProfile} />
+        <GiHamburgerMenu className='mt-5 text-2xl block lg:hidden me-12'  onClick={handleProfile} />
         </>
         )}
       </div>
      <div >
-     {islogin&&image&&<Profile user={user} />}
+     {islogin&&image&&<Profile user={user} setImage={setImage} image={image}/>}
   
      </div>
 
-    {user?.role=="recruiter"&&handleprofile&&<ShowProfile user={user} data={["my Job","Add Job", "Applied Student"]}
-    setHandleProfile={setHandleProfile}/>}
-    {user?.role=="student"&&handleprofile&&<ShowProfile user={user} data={["Applied Job","Job","Status"]} setHandleProfile=
-    {setHandleProfile}/>}
+    {user?.role=="recruiter"&&handleprofile&&<ShowProfile user={user} data={["Home", "Posted Jobs", "Post Job", "Applicants", "Shortlisted Candidates"]}
+    setHandleProfile={setHandleProfile} handleprofile={handleprofile}/>}
+    {user?.role=="student"&&handleprofile&&<ShowProfile user={user} data={["Home","Applied Job","Search Job","Shortlisted Companies"]} setHandleProfile=
+    {setHandleProfile} handleprofile={handleprofile}/>}
       {isOpen && <ShowManu/>}
     </div>
   );

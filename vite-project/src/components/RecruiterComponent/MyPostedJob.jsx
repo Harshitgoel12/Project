@@ -14,7 +14,7 @@ function MyPostedJob() {
       fun();
     },[])
   return (
-    <div>
+    <div className='h-screen ms-10'>
      {data.length==0? (<div>
         <h1>Their is no job Available</h1>
      </div>):(<Myjobs data={data.data}/>)}

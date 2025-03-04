@@ -1,19 +1,27 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import context from './createcontext';
 
-function Profile(props) {
-  const user=props.user;
-  const data=props.data;
-  const {islogin,setIslogin}=useContext(context)
+function Profile({user,setImage,image}) {
+  const {islogin,setIslogin}=useContext(context);
+  const ref=useRef();
   function handleLogout(){
     console.log("logout")
     localStorage.removeItem("userdetail");
     localStorage.removeItem("islogin");
     setIslogin(false);
   }
+  
+  function handleOutsideClick(e){
+    if(image&&!ref.current.contains(e.target)){
+       setImage(false)
+    }
+  }
+useEffect(()=>{
+  window.addEventListener("mousedown",handleOutsideClick);
+})
   return (
-    <div className='w-full flex flex-col items-end relative'>
+  <div className='w-full flex flex-col items-end relative z-50' ref={ref}>
   <div className=" flex items-center  flex-col me-10   bg-white shadow-lg p-4 rounded-lg w-64 absolute right-0 mt-2">
     <img 
       src={user?.file || "https://via.placeholder.com/80"} 
