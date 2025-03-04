@@ -10,4 +10,6 @@ recruiterRouter.route("/postjob").post(upload.single("logo"),isAuthenticated,xyz
 recruiterRouter.route("/myjobs").get(isAuthenticated,xyz.Myjobcontrolelr);
 recruiterRouter.route("/Alljobs").get(isAuthenticated,xyz.AllJobController)
 recruiterRouter.route("/getDetails/:id").get(isAuthenticated,abc.getDetails);
+recruiterRouter.route("/AllAppliedUser").get(isAuthenticated,xyz.AllAppliedUser);
+recruiterRouter.route("/ViewUserProfile/:id").get(isAuthenticated,abc.ViewUserProfile);
 module.exports =recruiterRouter;

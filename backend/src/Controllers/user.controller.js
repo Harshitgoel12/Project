@@ -140,10 +140,11 @@ const Applyjob =async (req,res)=>{
       { $push: { Apply: id } } 
     );
 
-    await jobModel.updateOne(
+    const data=await jobModel.updateOne(
       { _id: id },
       { $push: { UserApplied: req.user._id } } 
     );
+    console.log(data);
         return res.status(200).json({message:"job apply successfully",success:true,id:{id}});
  } catch (error) {
     console.log("something went wrong while applying to the job",error);
@@ -152,11 +153,30 @@ const Applyjob =async (req,res)=>{
 
 
 
+const AppledJobs = async (req,res)=>{
+  try {
+    if(!req.user){
+     return res.status(401).json({message:"user is not login please login", success:false});
+    }
+
+      const data= await model.findById(req.user._id);
+      const result=await data.populate("Apply");
+    return res.status(200).json({message:"finding all applied jobs successful",success:true,result:result.Apply})
+    
+  } catch (error) {
+    console.log("something went wrong getting data of applied jobs",error)
+  }
+}
+
+
+
+
 module.exports ={
     register,
     login,
     updateUserProfile,
     uploadResume,
-    Applyjob
+    Applyjob,
+    AppledJobs
 }
 

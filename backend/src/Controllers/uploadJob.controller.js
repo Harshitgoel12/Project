@@ -50,4 +50,19 @@ const AllJobController=async(req,res)=>{
     }
 }
 
-module.exports={jobUploadHandler,Myjobcontrolelr,AllJobController}
+
+
+const AllAppliedUser=async(req,res)=>{
+    try {
+        if(!req.user){
+            return res.status(401).json({message:"please login",success:false});
+        }
+        const data = await model.find({ PostedBy: req.user._id }).populate("UserApplied");
+    
+        return res.status(200).json({message:"fetching all user successfully",success:true,data:{data}});
+    } catch (error) {
+        console.log("something went wrong while getting all user's data",error);
+    }
+}
+
+module.exports={jobUploadHandler,Myjobcontrolelr,AllJobController,AllAppliedUser}

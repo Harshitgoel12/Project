@@ -9,7 +9,6 @@ function ShowProfile({ user, data, setHandleProfile }) {
   );
   const manuRef = useRef(null);
 
-  // ✅ Function to update `localStorage` and trigger a re-render
   const updateLocalStorage = (key, value) => {
     localStorage.setItem(key, value);
     setUserDetail(JSON.parse(localStorage.getItem("userdetail"))); // Force re-render

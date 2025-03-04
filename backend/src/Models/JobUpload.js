@@ -46,6 +46,10 @@ const JobSchema= new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"registeruser",
         required:true,
+    },
+    UserApplied:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:"registeruser"
     }
 
 })

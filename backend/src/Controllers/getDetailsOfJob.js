@@ -1,4 +1,5 @@
-const model=require("../Models/JobUpload")
+const model=require("../Models/JobUpload");
+const usermodel=require("../Models/register.user")
 const getDetails=async(req,res)=>{ 
    try {
      const {id}=req.params;
@@ -14,4 +15,21 @@ const getDetails=async(req,res)=>{
     
    }
 }
-module.exports ={getDetails}
+
+const ViewUserProfile= async(req,res)=>{
+  try {
+      const id=req.params.id;
+      const data=await usermodel.findById(id);
+      if(!data){
+        return res.status(401).json({message:"user is not exists",success:false})
+      }
+      return res.status(200).json({message:"user data fetch successfully",success:true,
+        data:{data}
+      })
+  } catch (error) {
+    console.log("something went wrong while getting detail of user",error)
+  }
+}
+
+
+module.exports ={getDetails,ViewUserProfile}

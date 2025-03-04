@@ -15,6 +15,9 @@ import MyPostedJob from './components/RecruiterComponent/MyPostedJob'
 import DetailsofJob from './components/RecruiterComponent/DetailsofJob'
 import ViewProfile from './components/UserComponent/ViewProfile'
 import UpdateProfile from './components/UserComponent/UpdateProfile'
+import MyAppliedJobs from './components/UserComponent/MyAppliedJobs'
+import AppliedStudent from './components/RecruiterComponent/AppliedStudent'
+import ViewUserProfile from './components/RecruiterComponent/ViewUserProfile'
 
 
 
@@ -61,6 +64,18 @@ const AppRouter= createBrowserRouter([
       },{
         path:"updateProfile",
         element:<UpdateProfile/>
+      },
+      {
+        path:"MyAppliedJobs",
+        element: <MyAppliedJobs/>
+      },
+      {
+        path:"AppliedStudent",
+        element:<AppliedStudent/>
+      },
+      {
+        path:"ViewUserProfile/:id",
+        element:<ViewUserProfile/>
       }
      ]
   }

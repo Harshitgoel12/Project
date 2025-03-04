@@ -20,7 +20,6 @@ import { data, useParams } from 'react-router-dom'
   const [isApplied,setIsApplied]=useState(false);
   useEffect(()=>{
          fun();
-         
           let data=JSON.parse(localStorage.getItem("appliedJobs"));
           data?.map((ele,idx)=>{
             if(ele==id){
