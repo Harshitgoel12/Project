@@ -31,5 +31,15 @@ const ViewUserProfile= async(req,res)=>{
   }
 }
 
+const AppliedUserForParticularJob= async(req,res)=>{
+ try {
+      const id=req.params.id;
+       const data=await model.findById(id).populate("UserApplied");
 
-module.exports ={getDetails,ViewUserProfile}
+       return res.status(200).json({message:"user data fetch successfully",success:true,result:data.UserApplied,jobId:id})
+ } catch (error) {
+  console.log("something went wrong while fetching data of all user applied for job",error)
+ }
+}
+
+module.exports ={getDetails,ViewUserProfile,AppliedUserForParticularJob}

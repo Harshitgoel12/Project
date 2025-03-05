@@ -12,4 +12,5 @@ recruiterRouter.route("/Alljobs").get(isAuthenticated,xyz.AllJobController)
 recruiterRouter.route("/getDetails/:id").get(isAuthenticated,abc.getDetails);
 recruiterRouter.route("/AllAppliedUser").get(isAuthenticated,xyz.AllAppliedUser);
 recruiterRouter.route("/ViewUserProfile/:id").get(isAuthenticated,abc.ViewUserProfile);
+recruiterRouter.route("/AppliedUser/:id").get(isAuthenticated,abc.AppliedUserForParticularJob);
 module.exports =recruiterRouter;

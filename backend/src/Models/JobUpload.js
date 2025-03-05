@@ -50,7 +50,7 @@ const JobSchema= new mongoose.Schema({
     UserApplied:{
         type:[mongoose.Schema.Types.ObjectId],
         ref:"registeruser"
-    }
+    },
 
 })
 const model=mongoose.model("PostJob",JobSchema);

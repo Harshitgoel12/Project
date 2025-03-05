@@ -18,6 +18,7 @@ import UpdateProfile from './components/UserComponent/UpdateProfile'
 import MyAppliedJobs from './components/UserComponent/MyAppliedJobs'
 import AppliedStudent from './components/RecruiterComponent/AppliedStudent'
 import ViewUserProfile from './components/RecruiterComponent/ViewUserProfile'
+import ViewAppliedApplicant from './components/RecruiterComponent/ViewAppliedApplicant'
 
 
 
@@ -76,6 +77,10 @@ const AppRouter= createBrowserRouter([
       {
         path:"ViewUserProfile/:id",
         element:<ViewUserProfile/>
+      },
+      {
+        path:"ViewAppliedApplicants/:id",
+        element:<ViewAppliedApplicant/>
       }
      ]
   }
