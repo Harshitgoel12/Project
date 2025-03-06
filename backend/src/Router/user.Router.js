@@ -14,4 +14,6 @@ router.route("/updateProfile").put(isAuthenticated,upload.single("file"),control
 router.route("/uploadresume").post(isAuthenticated,upload.single("Resume"),controllers.uploadResume);
 router.route("/ApplyJob/:id").put(isAuthenticated,controllers.Applyjob);
 router.route("/AppliedJobs").get(isAuthenticated,controllers.AppledJobs);
+router.route("/logout").get(isAuthenticated,controllers.logout);
+router.route("/ShortlistedCompony").get(isAuthenticated,controllers.ShortlistedCompony);
 module.exports= router;

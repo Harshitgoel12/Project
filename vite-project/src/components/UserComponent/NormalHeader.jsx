@@ -8,7 +8,7 @@ function NormalHeader() {
             <Link to={'/'}><h3 className='font-semibold mt-2 cursor-pointer'>Home</h3></Link>
               <Link to={'/MyAppliedJobs'}><h3 className='font-semibold mt-2 cursor-pointer'>Applied Job</h3></Link>
               <Link to={"/jobs"}><h3 className='font-semibold mt-2 cursor-pointer'>Search Job</h3></Link>
-              <Link to={"/browser"}><h3 className='font-semibold mt-2 cursor-pointer'>Shortlisted Companies</h3></Link>
+              <Link to={"/ShortlistedCompony"}><h3 className='font-semibold mt-2 cursor-pointer'>Shortlisted Companies</h3></Link>
              
             </div>
            

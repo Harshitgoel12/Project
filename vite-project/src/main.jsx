@@ -8,7 +8,7 @@ import HeroSection from './components/MainComponent/HeroSection.jsx'
 import Signup from './components/MainComponent/Signup.jsx'
 import Jobs from './components/UserComponent/Jobs.jsx'
 import Login from './components/MainComponent/Login.jsx'
-import Browser from './components/MainComponent/Browser.jsx'
+import ShortlistedCompony from './components/UserComponent/ShortlistedCompony.jsx'
 import PostJob  from "./components/RecruiterComponent/PostJob.jsx"
 import { Provider } from "./components/ui/provider";
 import MyPostedJob from './components/RecruiterComponent/MyPostedJob'
@@ -38,8 +38,8 @@ const AppRouter= createBrowserRouter([
         element :<Jobs/>
       },
       {
-        path:"browser",
-        element :<Browser/>
+        path:"ShortlistedCompony",
+        element :<ShortlistedCompony/>
       },
       {
         path:'login',

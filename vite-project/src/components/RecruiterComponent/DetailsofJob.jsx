@@ -110,6 +110,7 @@ import { data, useParams } from 'react-router-dom'
           Apply Now
         </button>)
  }
+      
       </div>
     </div>
    )

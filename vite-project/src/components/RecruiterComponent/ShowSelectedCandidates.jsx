@@ -63,10 +63,10 @@ function ShowSelectedCandidates() {
 
   return (
     <>
-      <h1 className="text-2xl font-semibold font-mono text-center mt-6 mb-3">
-        Dashboard
+      <h1 className="text-2xl text-gray-600 font-bold text-center mt-6 mb-3">
+        Shortlisted Candidates
       </h1>
-      <div className="w-full px-2 sm:px-6">
+      <div className="min-h-screen w-full px-2 sm:px-6">
         {/* Responsive Scrollable Table */}
         <div className="overflow-x-auto max-h-[80vh] border border-gray-300 rounded-lg">
           <Table className="w-full min-w-max shadow-lg">

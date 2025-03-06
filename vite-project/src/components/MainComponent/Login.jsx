@@ -2,7 +2,7 @@ import { Button, HStack, Input } from "@chakra-ui/react"
 import { Field } from "@/components/ui/field"
 import { Radio, RadioGroup } from "@/components/ui/radio"
 import { useContext, useState } from "react"
-
+import { SpinnerCircular, SpinnerCircularFixed } from 'spinners-react';
 import React from 'react'
 import axios from "axios"
 import { useNavigate, useNavigation } from "react-router-dom"
@@ -10,6 +10,7 @@ import context from "../createcontext.js"
 
 function Login() {
   const {islogin,setIslogin}=useContext(context);
+  const[isloading,setIsloading]=useState(false);
   const navigate=useNavigate();
   const [input,setInput]=useState({
       email:'',
@@ -21,6 +22,7 @@ function Login() {
   }
 async function submitHandler(e){
   e.preventDefault();
+  setIsloading(true);
     try {
       const data= await axios.post("http://localhost:3000/api/login",input,
         {
@@ -38,6 +40,7 @@ async function submitHandler(e){
     } catch (error) {
       console.log("something went wrong in login form", error)
     } 
+    setIsloading(false);
 
 }
   return (
@@ -56,7 +59,21 @@ async function submitHandler(e){
         <Radio value="recruiter" onChange={changeHandler} checked ={input.role==="recruiter"}>Recruiter</Radio>
       </HStack>
     </RadioGroup>
-     <Button type="submit" className='w-2/3 bg-black text-white mt-8 '>Button</Button>
+     {isloading?<Button
+      type="submit"
+      className="w-3/4 bg-black text-white mt-8 rounded-lg flex items-center justify-center gap-2 py-2 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+      disabled
+    >
+      <span>Processing...</span>
+      <SpinnerCircularFixed
+        size={24}
+        thickness={160}
+        speed={120}
+        color="rgba(255, 255, 255, 0.9)"
+        secondaryColor="rgba(255, 255, 255, 0.3)"
+      />
+    </Button> :<Button type="submit" className='w-3/4 bg-black text-white mt-8 rounded-lg' >Button</Button>
+    }
    </form>
 
     </div>

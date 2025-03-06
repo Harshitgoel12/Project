@@ -13,13 +13,14 @@ import {
 
 function MyAppliedJobs() {
     const [data,setData]=useState([]);
+    const [userId,setUserId]=useState("  ");
 async function AppliedJobs(){
 try {
     const data= await axios.get("http://localhost:3000/api/AppliedJobs",{
         headers:{"Content-Type":"application/json"},
         withCredentials:true
     })
-    console.log(data.data.result)
+    setUserId(data.data.id)
     setData(data.data.result)
 
 } catch (error) {
@@ -29,11 +30,11 @@ try {
     useEffect(()=>{
         AppliedJobs();
 
-    })
+    },[])
 
        
     return (
-        <>
+        <div className='min-h-screen'>
         <h1 className="text-2xl font-semibold font-mono text-center mt-6 mb-3">Applied Jobs</h1>
         <div className="w-screen  sm:px-6 ">
           <div className="overflow-x-auto">
@@ -60,9 +61,9 @@ try {
                     <TableCell className="text-gray-700 text-nowrap">{job.Title}</TableCell>
                     <TableCell className="text-gray-700 font-semibold">
                       <span className={`px-3 py-1 rounded-full text-white text-sm 
-                        ${job.Status === "Accepted" ? "bg-green-500" : job.Status === "Rejected" ? "bg-red-500" : "bg-yellow-500"}`}>
-                        {job.Status || "Pending"}
-                      </span>
+                        ${job.Selected.includes(userId) ? "bg-green-500" : job.Rejected.includes(userId) ? "bg-red-500" : "bg-yellow-500"}`}>
+                        {job.Selected.includes(userId)?"Shortlisted":job.Rejected.includes(userId)?"Rejected":"Pending"}
+                      </span> 
                     </TableCell>
                     <TableCell className="text-right">
                       <a href={"/details/"+job._id} target="_blank" rel="noopener noreferrer"
@@ -76,7 +77,7 @@ try {
             </Table>
           </div>
         </div>
-        </>
+        </div>
       );
       
       

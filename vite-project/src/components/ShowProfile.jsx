@@ -70,7 +70,7 @@ useEffect(()=>{
             {data[3]}
           </h1>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/Shortlisted"}>
           <h1 className="cursor-pointer font-semibold hover:bg-gray-100 w-full py-2 text-center">
             {data[4]}
           </h1>

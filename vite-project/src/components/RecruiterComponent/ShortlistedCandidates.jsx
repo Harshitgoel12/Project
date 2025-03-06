@@ -36,7 +36,7 @@ function ShortlistedCandidates() {
 
   return (
     <>
-      <h1 className="text-2xl font-semibold font-mono text-center mt-6 mb-3">Dashboard</h1>
+      <h1 className="text-2xl  font-bold text-gray-600 text-center mt-6 mb-3">Dashboard</h1>
       <div className="w-full px-2 sm:px-6">
         {/* Scrollable table on smaller screens */}
         <div className="overflow-x-auto h-screen">

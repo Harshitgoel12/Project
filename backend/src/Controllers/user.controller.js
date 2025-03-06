@@ -161,7 +161,7 @@ const AppledJobs = async (req,res)=>{
 
       const data= await model.findById(req.user._id);
       const result=await data.populate("Apply");
-    return res.status(200).json({message:"finding all applied jobs successful",success:true,result:result.Apply})
+    return res.status(200).json({message:"finding all applied jobs successful",success:true,result:result.Apply,id:req.user._id})
     
   } catch (error) {
     console.log("something went wrong getting data of applied jobs",error)
@@ -169,6 +169,30 @@ const AppledJobs = async (req,res)=>{
 }
 
 
+const logout= async(req,res)=>{
+  res.clearCookie("token", {
+    httpOnly: true,  // Ensure security
+    secure: true,    // Only for HTTPS
+    sameSite: "None", // Cross-origin handling
+  });
+
+  return res.status(200).json({ message: "Logout successful", success: true });
+}
+
+
+
+
+const ShortlistedCompony= async(req,res)=>{
+  try {
+    const id=req.user._id;
+   
+      const data=await model.findById(id).populate("Apply")
+    
+      return res.status(200).json({message:"succssful",success:true,data,userid:req.user._id});
+  } catch (error) {
+    console.log("something went wrong while fetching selected compony data",error);
+  }
+}
 
 
 module.exports ={
@@ -177,6 +201,8 @@ module.exports ={
     updateUserProfile,
     uploadResume,
     Applyjob,
-    AppledJobs
+    AppledJobs,
+    logout,
+    ShortlistedCompony
 }
 

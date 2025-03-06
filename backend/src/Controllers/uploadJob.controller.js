@@ -65,4 +65,17 @@ const AllAppliedUser=async(req,res)=>{
     }
 }
 
-module.exports={jobUploadHandler,Myjobcontrolelr,AllJobController,AllAppliedUser}
+
+const LatestJob= async(req,res)=>{
+    try {
+        console.log("yha tk to aa gye ji")
+      const data= await model.find({}).limit(8);
+      return res.status(200).json({message:"successfully fetching data",success:true,data});
+    } catch (error) {
+        console.log("something went wrong while fetching latest jobs",error)
+    }
+}
+
+
+
+module.exports={jobUploadHandler,Myjobcontrolelr,AllJobController,AllAppliedUser,LatestJob}

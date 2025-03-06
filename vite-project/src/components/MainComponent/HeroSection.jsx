@@ -3,6 +3,7 @@ import { IoMdSearch } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaArrowLeft } from "react-icons/fa6";
 import Scroller from "./Scroller";
+import LatestJob from "./LatestJob";
 function HeroSection(){
     return (
 <>
@@ -28,7 +29,8 @@ function HeroSection(){
 </div>
 <div className="max-w-7xl mx-auto my-20">
 <h1 className="md:text-4xl text-2xl font-bold mt-5  ms-16 md:ms-28"><span className="text-purple-600">Latest & Top </span>Job Openings</h1>
-<p className="mt-3 ms-28"> No Job Available</p>
+
+<LatestJob/>
 </div>
 
 </>

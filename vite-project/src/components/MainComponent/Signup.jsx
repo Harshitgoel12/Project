@@ -3,9 +3,11 @@ import { Input } from "@chakra-ui/react"
 import { Field } from "@/components/ui/field"
 import { Button } from "@chakra-ui/react"
 import { useState } from "react"
+import { SpinnerCircular, SpinnerCircularFixed } from 'spinners-react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 function Signup() {
+  const[isloading,setIsloading]=useState(false);
   const [userInput,setInput]=useState({
    username:'',
    email:'',
@@ -24,7 +26,8 @@ function Signup() {
     }
   };
   async function handlesubmit(e){
-    e.preventDefault()
+    e.preventDefault();
+    setIsloading(true);
     const formData =new FormData();
     formData.append("username",userInput.username);
     formData.append("email",userInput.email);
@@ -47,6 +50,7 @@ function Signup() {
       console.log(err);
 
     }
+    setIsloading(false);
   }
   return (
     <div className='w-full flex items-center flex-col  md:mx-0'>
@@ -55,6 +59,7 @@ function Signup() {
       <Field label="Full Name" required className='mt-8 w-3/4 '>
       <Input placeholder="Harshit Goel" name="username" className='ps-2 border' onChange={handlechange}  value={userInput.username}/>
     </Field>
+    
     <Field label="Email" required  className='mt-8 w-3/4 '>
       <Input placeholder="xyz@gmail.com" name="email" className='ps-2 border' onChange={handlechange} value={userInput.email}/>
     </Field>
@@ -74,7 +79,23 @@ function Signup() {
 
         <Input type="file" name='file' placeholder='upload file' onChange={handlechange} />
         </div>
-        <Button type="submit" className='w-3/4 bg-black text-white mt-8 '>Button</Button>
+        
+       {isloading?<Button
+  type="submit"
+  className="w-3/4 bg-black text-white mt-8 rounded-lg flex items-center justify-center gap-2 py-2 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+  disabled
+>
+  <span>Processing...</span>
+  <SpinnerCircularFixed
+    size={24}
+    thickness={160}
+    speed={120}
+    color="rgba(255, 255, 255, 0.9)"
+    secondaryColor="rgba(255, 255, 255, 0.3)"
+  />
+</Button> :<Button type="submit" className='w-3/4 bg-black text-white mt-8 rounded-lg' >Signup</Button>
+}
+
       </form> 
     </div>
   )

@@ -1,29 +1,61 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-function Myjobs({data}) {
-  console.log(data);
+function Myjobs({ data }) {
   return (
-    <div className='mt-10  md:gap-6 gap-2  mx-1  flex flex-wrap justify-center lg:justify-normal'>
-   {data.map((ele,idx)=>{
-   const dis= ele.Description.substr(0,80);
-   return  (<div className=' mt-2 rounded-xl md:mt-10  p-3 sm:p-6 shadow-lg w-80  '>
-        <div className='flex sm:flex-row flex-col  sm:gap-6 sm:justify-normal items-center '>
-        <img src={ele.logo} className=' h-16 w-16 md:h-20 md:w-30 rounded-full' alt="" />
-        <h1 className='sm:mt-6 text-lg md:text-2xl font-bold'>{ele.ComponyName||"google"}</h1>
-        </div>
-        <h1 className=' sm:text-start text-center  text-md md:text-xl font-semibold'>{ele.Title}</h1>
-        <h1 className='  p-2 sm:p-4'>{dis}...</h1>
-        <div className='flex '>
-        <h1 className='text-red-500 font-bold m-2 p-1 border-2  text-sm  rounded-lg '>{ele.Position} Positions</h1>
-        <h1 className='text-blue-500 font-bold m-2 p-1 border-2  text-sm  rounded-lg'>{ele.JobType}</h1>
-        <h1 className='text-purple-500 font-bold m-2 p-1 border-2  text-sm  rounded-lg'>{ele.Salary}</h1>
-        </div>
-        <Link to={"/details/"+ele._id}><div className='bg-black text-white font-semibold  text-md sm:text-lg py-2 text-center rounded-lg'>Details</div></Link>
-     </div>)
-     })}
+    <div className="mt-10 mx-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
+      {data.map((ele, idx) => {
+        const dis = ele.Description.substr(0, 80);
+        return (
+          <div
+            key={idx}
+            className="bg-white shadow-md rounded-2xl p-5 w-full max-w-[340px] transform hover:scale-105 transition duration-300"
+          >
+            {/* Company Logo & Name */}
+            <div className="flex items-center gap-4">
+              <img
+                src={ele.logo}
+                className="h-16 w-16 md:h-20 md:w-20 rounded-full border border-gray-300 shadow-sm"
+                alt="Company Logo"
+              />
+              <h1 className="text-lg md:text-xl font-bold text-gray-800">
+                {ele.ComponyName || "Google"}
+              </h1>
+            </div>
+
+            {/* Job Title */}
+            <h1 className="text-md md:text-lg font-semibold text-gray-700 mt-2">
+              {ele.Title}
+            </h1>
+
+            {/* Job Description */}
+            <p className="text-gray-600 text-sm mt-2">{dis}...</p>
+
+            {/* Job Tags */}
+            <div className="flex flex-wrap gap-2 mt-3">
+              <span className="text-red-600 font-semibold px-3 py-1 border border-red-500 rounded-lg text-xs">
+                {ele.Position} Positions
+              </span>
+              <span className="text-blue-600 font-semibold px-3 py-1 border border-blue-500 rounded-lg text-xs">
+                {ele.JobType}
+              </span>
+              <span className="text-purple-600 font-semibold px-3 py-1 border border-purple-500 rounded-lg text-xs">
+                {ele.Salary}
+              </span>
+            </div>
+
+            {/* View Details Button */}
+            <Link to={`/details/${ele._id}`}>
+              <div className="bg-black text-white font-semibold text-center py-2 mt-4 rounded-lg hover:bg-gray-800 transition">
+                View Details
+              </div>
+            </Link>
+          </div>
+        );
+      })}
     </div>
-  )
+  );
 }
 
-export default Myjobs
+export default Myjobs;
+
