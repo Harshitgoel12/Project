@@ -53,11 +53,11 @@ const JobSchema= new mongoose.Schema({
     },
    Selected:{
     type:[mongoose.Schema.Types.ObjectId],
-    ref:"registereduser",
+    ref:"registeruser",
    },
    Rejected:{
     type:[mongoose.Schema.Types.ObjectId],
-    ref:"registereduser",
+    ref:"registeruser",
    }
 })
 const model=mongoose.model("PostJob",JobSchema);

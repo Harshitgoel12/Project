@@ -8,7 +8,7 @@ function RecruiterPage() {
           <Link to={'/my-job'}><h1 className='font-semibold'>Posted Jobs</h1></Link>
     <Link to={'/postjob'}><h1 className='font-semibold'>Post Job</h1></Link>
     <Link to={'/AppliedStudent'}><h1 className='font-semibold'>Applicants</h1></Link>
-    <Link to={'/'}><h1 className='font-semibold'>Shortlisted Candidates</h1></Link>
+    <Link to={'/Shortlisted'}><h1 className='font-semibold'>Shortlisted Candidates</h1></Link>
     </div>
   )
 }

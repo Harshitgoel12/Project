@@ -34,7 +34,7 @@ const ViewUserProfile= async(req,res)=>{
 const AppliedUserForParticularJob= async(req,res)=>{
  try {
       const id=req.params.id;
-       const data=await model.findById(id).populate("UserApplied");
+       const data=await model.findById(id).populate("UserApplied").populate("Selected").exec();
 
        return res.status(200).json({message:"user data fetch successfully",success:true,result:data.UserApplied,jobId:id,data})
  } catch (error) {

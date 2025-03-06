@@ -11,13 +11,10 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Button } from "@chakra-ui/react";
 
-function ViewAppliedApplicant() {
+function ShowSelectedCandidates() {
   const params = useParams();
   const [userData, setUserData] = useState([]);
-  const [selected, setSelected] = useState([]);
-  const [rejected, setRejected] = useState([]);
   const [jobid, setJobId] = useState(null);
 
   async function fetchAllUser() {
@@ -29,10 +26,9 @@ function ViewAppliedApplicant() {
           withCredentials: true,
         }
       );
-      setRejected(data.data.data.Rejected);
-      setSelected(data.data.data.Selected);
+    console.log("applied user",data.data.data.Selected);
       setJobId(data.data.jobId);
-      setUserData(data.data.result);
+      setUserData(data.data.data.Selected);
     } catch (error) {
       console.log(
         "Error while fetching data of all users applied for a particular job:",
@@ -56,7 +52,7 @@ function ViewAppliedApplicant() {
         }
       );
       setSelected([...data.data.Selected]);
-      setRejected([...data.data.Rejected]);
+      setRejected([...data.data.Selected]);
     } catch (error) {
       console.log(
         "Error while handling selection and rejection:",
@@ -97,9 +93,7 @@ function ViewAppliedApplicant() {
                 <TableHead className="text-center text-lg font-semibold p-2">
                   GitHub
                 </TableHead>
-                <TableHead className="text-center text-lg font-semibold p-2">
-                  Action
-                </TableHead>
+                
               </TableRow>
             </TableHeader>
             <TableBody className="shadow-lg">
@@ -139,36 +133,7 @@ function ViewAppliedApplicant() {
                     {job?.Github}
                   </TableCell>
 
-                  <TableCell className="text-center p-2">
-                    {selected.includes(job?._id) ? (
-                      <span className="w-20 p-2 bg-green-600 text-white font-semibold text-lg rounded-md">
-                        Selected
-                      </span>
-                    ) : rejected.includes(job?._id) ? (
-                      <span className="w-20 p-2 bg-red-600 text-white font-semibold text-lg rounded-md">
-                        Rejected
-                      </span>
-                    ) : (
-                      <div className="flex flex-col sm:flex-row gap-2 justify-center">
-                        <Button
-                          className="text-white bg-green-500 hover:bg-green-700 font-semibold px-4 py-2 rounded-md"
-                          onClick={() =>
-                            handleShortlist("Selected", job?._id, jobid)
-                          }
-                        >
-                          Select
-                        </Button>
-                        <Button
-                          className="text-white bg-red-500 hover:bg-red-700 font-semibold px-4 py-2 rounded-md"
-                          onClick={() =>
-                            handleShortlist("Rejected", job?._id, jobid)
-                          }
-                        >
-                          Reject
-                        </Button>
-                      </div>
-                    )}
-                  </TableCell>
+                
                 </TableRow>
               ))}
             </TableBody>
@@ -179,5 +144,6 @@ function ViewAppliedApplicant() {
   );
 }
 
-export default ViewAppliedApplicant;
+export default ShowSelectedCandidates;
+
 

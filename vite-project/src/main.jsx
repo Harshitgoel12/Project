@@ -19,6 +19,8 @@ import MyAppliedJobs from './components/UserComponent/MyAppliedJobs'
 import AppliedStudent from './components/RecruiterComponent/AppliedStudent'
 import ViewUserProfile from './components/RecruiterComponent/ViewUserProfile'
 import ViewAppliedApplicant from './components/RecruiterComponent/ViewAppliedApplicant'
+import ShortlistedCandidates from './components/RecruiterComponent/ShortlistedCandidates'
+import ShowSelectedCandidates from './components/RecruiterComponent/ShowSelectedCandidates'
 
 
 
@@ -81,6 +83,14 @@ const AppRouter= createBrowserRouter([
       {
         path:"ViewAppliedApplicants/:id",
         element:<ViewAppliedApplicant/>
+      },
+      {
+        path:"Shortlisted",
+        element:<ShortlistedCandidates/>
+      },
+      {
+        path:"ShowShortlistedCandidates/:id",
+        element:<ShowSelectedCandidates/>
       }
      ]
   }
