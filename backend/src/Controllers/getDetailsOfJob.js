@@ -36,10 +36,33 @@ const AppliedUserForParticularJob= async(req,res)=>{
       const id=req.params.id;
        const data=await model.findById(id).populate("UserApplied");
 
-       return res.status(200).json({message:"user data fetch successfully",success:true,result:data.UserApplied,jobId:id})
+       return res.status(200).json({message:"user data fetch successfully",success:true,result:data.UserApplied,jobId:id,data})
  } catch (error) {
   console.log("something went wrong while fetching data of all user applied for job",error)
  }
 }
 
-module.exports ={getDetails,ViewUserProfile,AppliedUserForParticularJob}
+const handleShortlist=async(req,res)=>{
+  try {
+    const {status,jobid,userid}=req.body;
+    if(!status||!jobid||!userid){
+      return res.status(401).json({message:"please fill all the details",success:false});
+    }
+    let data;
+    if(status=="Rejected"){
+      data=await model.findByIdAndUpdate(jobid, {
+        $push: { Rejected: userid }, // Add ID to array
+      },{new:true});
+    }
+    else{
+     data= await model.findByIdAndUpdate(jobid, {
+        $push: { Selected: userid }, // Add ID to array
+      },{new:true});
+    }
+    return res.status(200).json({message:"successful",success:true,data});
+  } catch (error) {
+    console.log("something went wrong while shortlising the candidates",error)
+  }
+}
+
+module.exports ={getDetails,ViewUserProfile,AppliedUserForParticularJob,handleShortlist}
