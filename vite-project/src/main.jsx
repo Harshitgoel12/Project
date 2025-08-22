@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Provider } from "@/components/ui/provider"
 import  {RouterProvider,createBrowserRouter} from "react-router-dom"
 import './index.css'
 import App from './components/MainComponent/App.jsx'
@@ -10,7 +11,6 @@ import Jobs from './components/UserComponent/Jobs.jsx'
 import Login from './components/MainComponent/Login.jsx'
 import ShortlistedCompony from './components/UserComponent/ShortlistedCompony.jsx'
 import PostJob  from "./components/RecruiterComponent/PostJob.jsx"
-import { Provider } from "./components/ui/provider";
 import MyPostedJob from './components/RecruiterComponent/MyPostedJob'
 import DetailsofJob from './components/RecruiterComponent/DetailsofJob'
 import ViewProfile from './components/UserComponent/ViewProfile'

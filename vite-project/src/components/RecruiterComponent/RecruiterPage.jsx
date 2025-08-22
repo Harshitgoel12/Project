@@ -1,16 +1,34 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 function RecruiterPage() {
+  const location = useLocation(); // to highlight active link
+
+  const links = [
+    { path: '/', label: 'Home' },
+    { path: '/my-job', label: 'Posted Jobs' },
+    { path: '/postjob', label: 'Post Job' },
+    { path: '/AppliedStudent', label: 'Applicants' },
+    { path: '/Shortlisted', label: 'Shortlisted Candidates' },
+  ];
+
   return (
-    <div className='flex gap-5 mt-5 ms-28'>
-       <Link to={'/'}><h1 className='font-semibold'>Home</h1></Link>
-          <Link to={'/my-job'}><h1 className='font-semibold'>Posted Jobs</h1></Link>
-    <Link to={'/postjob'}><h1 className='font-semibold'>Post Job</h1></Link>
-    <Link to={'/AppliedStudent'}><h1 className='font-semibold'>Applicants</h1></Link>
-    <Link to={'/Shortlisted'}><h1 className='font-semibold'>Shortlisted Candidates</h1></Link>
-    </div>
-  )
+    <nav className="flex flex-wrap gap-4 mt-5 ml-7">
+      {links.map((link, idx) => (
+        <Link key={idx} to={link.path}>
+          <div
+            className={`px-4 py-2 rounded-lg font-semibold cursor-pointer transition 
+              ${location.pathname === link.path 
+                ? 'bg-purple-600 text-white shadow-lg' 
+                : 'bg-purple-100 text-purple-800 hover:bg-purple-200'}`
+            }
+          >
+            {link.label}
+          </div>
+        </Link>
+      ))}
+    </nav>
+  );
 }
 
-export default RecruiterPage
+export default RecruiterPage;

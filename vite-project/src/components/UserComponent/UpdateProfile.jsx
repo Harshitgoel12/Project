@@ -1,123 +1,159 @@
-import { Input } from "@chakra-ui/react"
-import { Field } from "@/components/ui/field"
-import { Button } from "@chakra-ui/react"
-import React, { useEffect, useState } from 'react'
-import { Textarea } from "../ui/textarea"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import { Input, Button } from "@chakra-ui/react";
+import { Textarea } from "../ui/textarea";
+import { Field } from "@/components/ui/field";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function UpdateProfile() {
+  const [userInput, setUserInput] = useState({
+    username: "",
+    Industary: "",
+    Experience: "",
+    About: "",
+    skills: "",
+    email: "",
+    Number: "",
+    file: null,
+  });
 
-    const [userData, setUserData] = useState({}); // Initialize with empty object
-  
+  const navigate = useNavigate();
+
+  // Load user details from localStorage
   useEffect(() => {
     const data = localStorage.getItem("userdetail");
     if (data) {
-      const result = JSON.parse(data);
-      if (typeof result.skills === "string") {
-        result.skills = result.skills.replaceAll(",", " ");
-      } else if (Array.isArray(result.skills)) {
-        result.skills = result.skills.join(" ");
-      }
-
-      setUserData(result);
+      const parsed = JSON.parse(data);
+      setUserInput({
+        username: parsed.username || "",
+        Industary: parsed.Industary || "",
+        Experience: parsed.Experience || "",
+        About: parsed.About || "",
+        skills: Array.isArray(parsed.skills)
+          ? parsed.skills.join(", ")
+          : parsed.skills || "",
+        email: parsed.email || "",
+        Number: parsed.Number || "",
+        file: null, // file will be updated only if user uploads a new one
+      });
     }
   }, []);
 
-  // Update userInput when userData changes
-  const [userInput, setInput] = useState({});
-const navigate=useNavigate();
-  useEffect(() => {
-    setInput({
-      username: userData.username || "NA",
-      Industary: userData.Industary || "NA",
-      Experience: userData.Experience || "NA",
-      About: userData.About || "NA",
-      skills: userData.skills || "NA",
-      email: userData.email || "NA",
-      Number: userData.Number || "NA",
-      file: userData.file || "NA",
-    });
-  }, [userData]);
-      async function handlesubmit(e){
-        e.preventDefault();
-        const formData=new FormData();
-        formData.append("username",userInput.username);
-        formData.append("Industary",userInput.Industary);
-        formData.append("Experience",userInput.Experience);
-        formData.append("About",userInput.About);
-        formData.append("skills",userInput.skills);
-        formData.append("email",userInput.email);
-        formData.append("Number",userInput.Number)
-        if(userInput.file){
-        formData.append("file",userInput.file);
-        }
-            try {
-                const res= await axios.put("http://localhost:3000/api/updateProfile",formData,
-                {
-                  headers: {'Content-Type': "multipart/form-data" },
-                  withCredentials: true,
-              })
-              console.log(res.data);
-              if(res.data.success){
-                localStorage.setItem("userdetail",JSON.stringify(res.data.user));
-                console.log(localStorage.getItem("userdetail"));
-               navigate("/profile");
-              }
-            } catch (error) {
-                console.log("something went wrong while updating the userData",error)
-            }
+  const handleChange = (e) => {
+    const { name, value, type, files } = e.target;
+    if (type === "file") {
+      setUserInput((prev) => ({ ...prev, file: files[0] }));
+    } else {
+      setUserInput((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    for (const key in userInput) {
+      if (key === "file" && !userInput.file) continue;
+      formData.append(key, userInput[key]);
+    }
+
+    try {
+      const res = await axios.put(
+        "http://localhost:3000/api/updateProfile",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
+      );
+
+      if (res.data.success) {
+        localStorage.setItem("userdetail", JSON.stringify(res.data.user));
+        navigate("/profile");
       }
-      const handlechange = (e) => {
-        const { name, value, type, files } = e.target;
-        if (type !== 'file') {
-          setInput({ ...userInput, [name]: value });
-        } else {
-          setInput({ ...userInput, file: files?.[0] });
-        }
-      };
+    } catch (err) {
+      console.error("Error updating profile:", err);
+    }
+  };
+
   return (
-    <div className=' flex items-center flex-col  md:mx-0'>
-         <form className='w-screen   ms-10 me-10  border mt-12 pb-12 flex items-center flex-col' onSubmit={handlesubmit}>
-          <h1 className='text-2xl font-bold mt-3'>Update Details</h1>
-          <Field label="Full Name" required className='mt-8 w-3/4 '>
-          <Input placeholder="Harshit Goel" name="username" className='ps-2 border' onChange={handlechange}  value={userInput.username}/>
+    <div className="flex items-center flex-col md:mx-0">
+      <form
+        className="w-screen ms-10 me-10 border mt-12 pb-12 flex items-center flex-col"
+        onSubmit={handleSubmit}
+      >
+        <h1 className="text-2xl font-bold mt-3">Update Details</h1>
+
+        <Field label="Full Name" required className="mt-8 w-3/4">
+          <Input
+            placeholder="Full Name"
+            name="username"
+            onChange={handleChange}
+            value={userInput.username}
+          />
         </Field>
-        <Field label="Industary" required className='mt-8 w-3/4 '>
-          <Input placeholder="eg web developer" name="Industary" className='ps-2 border' onChange={handlechange}  value={userInput.Industary}/>
+
+        <Field label="Industry" required className="mt-8 w-3/4">
+          <Input
+            placeholder="eg Web Developer"
+            name="Industary"
+            onChange={handleChange}
+            value={userInput.Industary}
+          />
         </Field>
-        <Field label="Experience" required className='mt-8 w-3/4 '>
-          <Input placeholder="tell about anything you do " name="Experience" className='ps-2 border' onChange={handlechange}  value={userInput.Experience}/>
+
+        <Field label="Experience" required className="mt-8 w-3/4">
+          <Input
+            placeholder="Tell about your experience"
+            name="Experience"
+            onChange={handleChange}
+            value={userInput.Experience}
+          />
         </Field>
-         <Field label="About" required className="mt-6 w-3/4">
-                  <Textarea
-                    placeholder="Provide a brief job description, responsibilities, and expectations..."
-                    onChange={handlechange}
-                    value={userInput.About}
-                    name="About"
-                    className="h-32"
-                  />
-                </Field>
-                <Field label="Skills" required  className='mt-8 w-3/4 '>
-          <Input placeholder="Skills" name="skills" className='ps-2 border' onChange={handlechange} value={userInput.skills}/>
+
+        <Field label="About" required className="mt-6 w-3/4">
+          <Textarea
+            placeholder="Provide a brief description..."
+            name="About"
+            onChange={handleChange}
+            value={userInput.About}
+            className="h-32"
+          />
         </Field>
-        <Field label="Email" required  className='mt-8 w-3/4 '>
-          <Input placeholder="xyz@gmail.com" name="email" className='ps-2 border' onChange={handlechange} value={userInput.email}/>
+
+        <Field label="Skills" required className="mt-8 w-3/4">
+          <Input
+            placeholder="Comma separated skills"
+            name="skills"
+            onChange={handleChange}
+            value={userInput.skills}
+          />
         </Field>
-        <Field label="Phone Number" required  className='mt-8 w-3/4 '>
-          <Input placeholder="8080808080" name="Number" className='ps-2 border' onChange={handlechange} value={userInput.Number}/>
+
+        <Field label="Email" required className="mt-8 w-3/4">
+          <Input
+            placeholder="example@gmail.com"
+            name="email"
+            onChange={handleChange}
+            value={userInput.email}
+          />
         </Field>
-       
-        <div className='mt-8 flex md:justify-between w-4/4 gap-5 justify-center flex-wrap'>
-    
-    
-    
-            <Input type="file" name='file' placeholder='upload file' onChange={handlechange} />
-            </div>
-            <Button type="submit" className='w-3/4 bg-black text-white mt-8 '>Update Profile</Button>
-          </form> 
+
+        <Field label="Phone Number" required className="mt-8 w-3/4">
+          <Input
+            placeholder="8080808080"
+            name="Number"
+            onChange={handleChange}
+            value={userInput.Number}
+          />
+        </Field>
+
+        <div className="mt-8 flex md:justify-between w-4/4 gap-5 justify-center flex-wrap">
+          <Input type="file" name="file" onChange={handleChange} />
         </div>
-  )
+
+        <Button type="submit" className="w-3/4 bg-black text-white mt-8">
+          Update Profile
+        </Button>
+      </form>
+    </div>
+  );
 }
 
-export default UpdateProfile
+export default UpdateProfile;

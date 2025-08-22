@@ -1,121 +1,123 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { data, useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
- function DetailsofJob() {
-    const {id}=useParams();
-    const [job,setJob]=useState(null);
-   async function fun(){ 
-   try {
-     const result= await axios.get("http://localhost:3000/api/getDetails/"+id,{
-        headers:{"Content-Type":"application/json"},
-        withCredentials:true
-     })
-     setJob(result.data.data);
-     console.log(result.data.data);
-   } catch (error) {
-    console.log("something went wrong while fatching particular job data form the jobs details",error)
-   }
+function DetailsofJob() {
+  const { id } = useParams();
+  const [job, setJob] = useState(null);
+  const [isApplied, setIsApplied] = useState(false);
+
+  async function fetchJobDetails() {
+    try {
+      const result = await axios.get(`http://localhost:3000/api/getDetails/${id}`, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      setJob(result.data.data);
+      console.log(result.data.data);
+    } catch (error) {
+      console.error("Error fetching job data:", error);
+    }
   }
-  const [isApplied,setIsApplied]=useState(false);
-  useEffect(()=>{
-         fun();
-          let data=JSON.parse(localStorage.getItem("appliedJobs"));
-          data?.map((ele,idx)=>{
-            if(ele==id){
-              setIsApplied(true);
-            }
-          })
 
-  },[])
+  useEffect(() => {
+    fetchJobDetails();
 
-  
+    const appliedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
+    if (appliedJobs.includes(id)) setIsApplied(true);
+  }, [id]);
 
- async function handleApply(e){
-     try {
-       const result=await axios.put("http://localhost:3000/api/ApplyJob/"+id,{},{
-         headers:{"Content-Type":"application/json"},
-         withCredentials:true
-       })
-    
-        let obj1=JSON.parse(localStorage.getItem("appliedJobs"))||[];
-        console.log(obj1);
-        if(!obj1.includes(result.data.id.id)){
-        obj1.push(result.data.id.id)
+  async function handleApply() {
+    try {
+      const result = await axios.put(`http://localhost:3000/api/ApplyJob/${id}`, {}, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+
+      const appliedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
+      if (!appliedJobs.includes(result.data.id.id)) {
+        appliedJobs.push(result.data.id.id);
+        localStorage.setItem("appliedJobs", JSON.stringify(appliedJobs));
         setIsApplied(true);
-      
-         localStorage.setItem("appliedJobs", JSON.stringify(obj1));
-        }
-     } catch (error) {
-      console.log("something went wrong while applying to the job",error);
-     }
- }
+      }
+    } catch (error) {
+      console.error("Error applying for job:", error);
+    }
+  }
 
+  if (!job)
+    return (
+      <div className="flex items-center justify-center h-screen text-gray-500 text-xl">
+        Loading job details...
+      </div>
+    );
 
-  if(job==null)return <h1>something went wrong </h1>
   return (
-  <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
-      {/* Header with Job Title & Company */}
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-3xl font-bold">{job.Title}</h1>
-        <img src={job.logo || "https://source.unsplash.com/random/?office"} 
-             alt="Company Logo" className="w-20 h-20  rounded-xl" />
+    <div className="max-w-5xl mx-auto p-6 mt-10 bg-white rounded-xl shadow-lg">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-800">{job.Title}</h1>
+          <p className="text-gray-600 mt-1">{job.ComponyName}</p>
+        </div>
+        <img
+          src={job.logo || "https://source.unsplash.com/random/?office"}
+          alt="Company Logo"
+          className="w-24 h-24 rounded-xl object-cover shadow-md"
+        />
       </div>
 
-      {/* Job Info Section */}
-      <div className="grid grid-cols-2 gap-4 bg-gray-100 p-4 rounded-lg">
-        <p><strong>Company:</strong> {job.ComponyName}</p>
-        <p><strong>Location:</strong> {job.Location}</p>
-        <p><strong>Salary:</strong> {job.Salary ? `${job.Salary}` : "Not Disclosed"}</p>
+      {/* Job Info */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50 p-5 rounded-lg shadow-inner">
+        <p><strong>Location:</strong> {job.Location || "Remote"}</p>
+        <p><strong>Salary:</strong> {job.Salary || "Not Disclosed"}</p>
         <p><strong>Job Type:</strong> {job.JobType || "Full-time"}</p>
-        <p><strong>Positions:</strong> {job.Position || "NA"}</p>
+        <p><strong>Positions:</strong> {job.Position || "N/A"}</p>
       </div>
 
       {/* Job Description */}
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold mb-2">Job Description</h2>
+      <section className="mt-6">
+        <h2 className="text-xl font-semibold text-gray-700 mb-2">Job Description</h2>
         <p className="text-gray-700">{job.Description}</p>
-      </div>
+      </section>
 
-       {/* Requirements*/}
-       <div className="mt-6">
-        <h2 className="text-xl font-semibold mb-2">Requirements</h2>
+      {/* Requirements */}
+      <section className="mt-6">
+        <h2 className="text-xl font-semibold text-gray-700 mb-2">Requirements</h2>
         <p className="text-gray-700">{job.Requirements}</p>
-      </div>
+      </section>
 
-      {/* Skills Required */}
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold mb-2">Skills Required</h2>
+      {/* Skills */}
+      <section className="mt-6">
+        <h2 className="text-xl font-semibold text-gray-700 mb-2">Skills Required</h2>
         <div className="flex flex-wrap gap-2">
-          {job.skills?.map((skill, index) => (
-            <span key={index} className="px-3 py-1 bg-blue-500 text-white text-sm rounded-lg">
+          {job.skills?.map((skill, idx) => (
+            <span
+              key={idx}
+              className="px-3 py-1 bg-blue-500 text-white text-sm rounded-full shadow-sm"
+            >
               {skill}
             </span>
           ))}
         </div>
-      </div>
+      </section>
 
-     
-      <div className="mt-6 text-center">
-        {isApplied?(<button className={"bg-green-300 text-white px-6 py-2 rounded-lg text-lg hover:bg-green-600 transition"
-         
-        }
-        onClick={handleApply}
-        disabled>
-          Already Applied
+      {/* Apply Button */}
+      <div className="mt-8 text-center">
+        <button
+          onClick={handleApply}
+          disabled={isApplied}
+          className={`px-6 py-2 rounded-lg text-lg font-semibold transition-all
+            ${isApplied
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : "bg-green-500 hover:bg-green-600 text-white"
+            }`}
+        >
+          {isApplied ? "Already Applied" : "Apply Now"}
         </button>
-        )
-        :(<button className="bg-green-500 text-white px-6 py-2 rounded-lg text-lg hover:bg-green-600 transition"
-        onClick={handleApply}>
-          Apply Now
-        </button>)
- }
-      
       </div>
     </div>
-   )
+  );
 }
 
-export default DetailsofJob
-
-
+export default DetailsofJob;
